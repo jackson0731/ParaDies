@@ -1,10 +1,14 @@
-**[Ll]ibrary/
-**[Tt]emp/
-**[Oo]bj/
-**[Bb]uild/
-**[Bb]uilds/
-**[Ll]ogs/
-**[Mm]emoryCaptures/
+# This .gitignore file should be placed at the root of your Unity project directory
+#
+# Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
+#
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
@@ -54,34 +58,3 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-.gitattributes
-ParaDies/Assets/Scenes.meta
-ParaDies/Assets/Scenes/SampleScene.unity
-ParaDies/Assets/Scenes/SampleScene.unity.meta
-ParaDies/Packages/manifest.json
-ParaDies/Packages/packages-lock.json
-ParaDies/ProjectSettings/AudioManager.asset
-ParaDies/ProjectSettings/boot.config
-ParaDies/ProjectSettings/ClusterInputManager.asset
-ParaDies/ProjectSettings/DynamicsManager.asset
-ParaDies/ProjectSettings/EditorBuildSettings.asset
-ParaDies/ProjectSettings/EditorSettings.asset
-ParaDies/ProjectSettings/GraphicsSettings.asset
-ParaDies/ProjectSettings/InputManager.asset
-ParaDies/ProjectSettings/MemorySettings.asset
-ParaDies/ProjectSettings/NavMeshAreas.asset
-ParaDies/ProjectSettings/PackageManagerSettings.asset
-ParaDies/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
-ParaDies/ProjectSettings/Physics2DSettings.asset
-ParaDies/ProjectSettings/PresetManager.asset
-ParaDies/ProjectSettings/ProjectSettings.asset
-ParaDies/ProjectSettings/ProjectVersion.txt
-ParaDies/ProjectSettings/QualitySettings.asset
-ParaDies/ProjectSettings/TagManager.asset
-ParaDies/ProjectSettings/TimeManager.asset
-ParaDies/ProjectSettings/UnityConnectSettings.asset
-ParaDies/ProjectSettings/VersionControlSettings.asset
-ParaDies/ProjectSettings/VFXManager.asset
-ParaDies/ProjectSettings/XRSettings.asset
-ParaDies/UserSettings/EditorUserSettings.asset
-ParaDies/UserSettings/Layouts/default-2021.dwlt
