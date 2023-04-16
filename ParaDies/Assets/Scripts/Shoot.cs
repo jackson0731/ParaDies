@@ -46,7 +46,6 @@ public class Shoot : MonoBehaviour
             if (wiimote.Button.a && !buttonPressed)
             {
                 buttonPressed = true;
-
                 // get the screen position of the UI element
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(uiElement.position.x, uiElement.position.y, 10));
 

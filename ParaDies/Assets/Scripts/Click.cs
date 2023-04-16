@@ -8,9 +8,12 @@ using WiimoteApi;
 public class Click : MonoBehaviour
 {
     private Wiimote wiimote;
-    public bool buttonPressed = false;
+    private bool buttonPressed = false;
 
-    // Start is called before the first frame update
+    public Button play;
+    public Button set;
+    public Button quit;
+
     void Start()
     {
         WiimoteManager.FindWiimotes();
@@ -21,7 +24,6 @@ public class Click : MonoBehaviour
         GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (wiimote != null)
@@ -31,20 +33,39 @@ public class Click : MonoBehaviour
             if (wiimote.Button.a && !buttonPressed)
             {
                 buttonPressed = true;
+                play.onClick.Invoke();
             }
-            if (!wiimote.Button.a)
+            else if (wiimote.Button.one && !buttonPressed)
+            {
+                buttonPressed = true;
+                set.onClick.Invoke();
+            }
+
+            else if (wiimote.Button.two && !buttonPressed)
+            {
+                buttonPressed = true;
+                quit.onClick.Invoke();
+            }
+
+            if (!wiimote.Button.a && !wiimote.Button.one && !wiimote.Button.two)
             {
                 buttonPressed = false;
             }
         }
+    }
 
-        if (!buttonPressed)
-        {
-            GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
-        }
-        else
-        {
-            GameObject.Find("Dot 5").GetComponent<Image>().color = Color.red;
-        }
+    public void OnPlayClick()
+    {
+        SceneManager.LoadScene("1F");
+    }
+
+    public void OnSetClick()
+    {
+        Debug.Log("Set");
+    }
+
+    public void OnQuitClick()
+    {
+        Debug.Log("Quit");
     }
 }
