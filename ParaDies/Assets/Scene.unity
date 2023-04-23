@@ -1679,6 +1679,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   Moved: 0
+  Moved2: 0
+  Moved3: 0
+  Level: 1
 --- !u!111 &1325700516
 Animation:
   m_ObjectHideFlags: 0
