@@ -35,11 +35,18 @@ public class Shoot : MonoBehaviour
 
         GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
 
-        anim = gameObject.GetComponent<Animation>();
-
         GameObject.Find("Level1").SetActive(true);
         GameObject.Find("Level2").SetActive(false);
         GameObject.Find("Level3").SetActive(false);
+
+        anim = gameObject.GetComponent<Animation>();
+        foreach (AnimationClip clip in anim)
+        {
+            AnimationEvent animationEvent = new AnimationEvent();
+            animationEvent.time = clip.length;  // 在動畫結束時觸發事件
+            animationEvent.functionName = "OnAnimationEnd";
+            clip.AddEvent(animationEvent);
+        }
     }
 
     void Update()
@@ -94,8 +101,7 @@ public class Shoot : MonoBehaviour
             if (GameObject.Find("Level1").GetComponent<Move1>().AllEnemyDead == true)
             {
                 anim.Play("Move1");
-                Moved = true;
-                Level++;
+                
             }
         }
         if (Level == 2)
@@ -104,8 +110,6 @@ public class Shoot : MonoBehaviour
             if (GameObject.Find("Level2").GetComponent<Move2>().AllEnemyDead2 == true)
             {
                 anim.Play("Move2");
-                Moved2 = true;
-                Level++;
             }
         }
         if (Level == 3)
@@ -114,8 +118,24 @@ public class Shoot : MonoBehaviour
             if (GameObject.Find("Level3").GetComponent<Move3>().AllEnemyDead3 == true)
             {
                 anim.Play("Move3");
-                Moved3 = true;
             }
+        }
+    }
+
+    private void OnAnimationEnd()
+    {
+        if (Level == 1)
+        {
+            Moved = true;
+            Level++;
+        }else if (Level == 2)
+        {
+            Moved2 = true;
+            Level++;
+        }
+        else if (Level == 3)
+        {
+            Moved3 = true;
         }
     }
 }

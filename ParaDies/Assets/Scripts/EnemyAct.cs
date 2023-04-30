@@ -11,6 +11,7 @@ public class EnemyAct : MonoBehaviour
     public float speed = 0.5f;
     private Vector3 direction;
     private bool playerdead = false;
+    private bool walk = true;
 
     private float attackTimer = 1.2f;
     public float attackCooldown = 2.0f;
@@ -20,16 +21,19 @@ public class EnemyAct : MonoBehaviour
     void Start()
     {
         animator.SetBool("Attack", false);
-        animator.SetBool("Walking", true);
         Enemy = gameObject;
         Player = GameObject.Find("Player");
-        direction = (Player.transform.position - Enemy.transform.position).normalized;
-        direction.y = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(gameObject.activeSelf && walk == true && animator.GetBool("Death") == false)
+        {
+            animator.SetBool("Walking", true);
+            direction = (Player.transform.position - Enemy.transform.position).normalized;
+            direction.y = 0f;
+        }
         transform.LookAt(Player.transform);
         transform.position += direction * speed * Time.deltaTime;
         if (GameObject.Find("Player").GetComponent<Shoot>().HP == 0)
@@ -52,6 +56,7 @@ public class EnemyAct : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        walk = false;
         if (animator.GetBool("Death") == false)
         {
             animator.SetBool("Walking", false);
