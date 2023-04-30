@@ -11,6 +11,8 @@ public class Shoot : MonoBehaviour
     private bool buttonPressed = false;
     public Camera mainCamera;
 
+    public int HP = 3;
+
     public RectTransform uiElement;
     public LayerMask layerMask;
 
@@ -20,6 +22,9 @@ public class Shoot : MonoBehaviour
     public bool Moved3;
 
     public int Level = 1;
+
+    public bool animEnd = false;
+    private GameObject ShootedEnemy;
 
     void Start()
     {
@@ -56,9 +61,17 @@ public class Shoot : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    // do something with the hit information
-                    hit.collider.gameObject.SetActive(false);
+                    hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Walking", false);
+                    ShootedEnemy = hit.collider.gameObject;
+                    if(ShootedEnemy.GetComponent<EnemyAct>().animator.GetBool("Walking") == false)
+                    {
+                        hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Death", true);
+                    }
                 }
+            }
+            if (animEnd == true)
+            {
+                ShootedEnemy.SetActive(false);
             }
             if (!wiimote.Button.a)
             {
