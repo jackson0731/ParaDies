@@ -33,8 +33,12 @@ public class EnemyAct : MonoBehaviour
             animator.SetBool("Walking", true);
             direction = (Player.transform.position - Enemy.transform.position).normalized;
             direction.y = 0f;
+            Vector3 lookPos = Player.transform.position - transform.position;
+            lookPos.y = 0;
+            Quaternion rotation = Quaternion.LookRotation(lookPos);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 1f * Time.deltaTime);
         }
-        transform.LookAt(Player.transform);
+        
         transform.position += direction * speed * Time.deltaTime;
         if (GameObject.Find("Player").GetComponent<Shoot>().HP == 0)
         {
