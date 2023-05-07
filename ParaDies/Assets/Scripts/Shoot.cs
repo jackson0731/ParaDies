@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Text;
 using WiimoteApi;
+using UnityEngine.UI;
 
 public class Shoot : MonoBehaviour
 {
@@ -25,6 +26,9 @@ public class Shoot : MonoBehaviour
 
     public bool animEnd = false;
     private GameObject ShootedEnemy;
+
+    public Text hptext;
+    public GameObject Deadtext;
 
     void Start()
     {
@@ -119,6 +123,11 @@ public class Shoot : MonoBehaviour
             {
                 anim.Play("Move3");
             }
+        }
+        hptext.text = "" + HP;
+        if(HP == 0)
+        {
+            Deadtext.SetActive(true);
         }
     }
 

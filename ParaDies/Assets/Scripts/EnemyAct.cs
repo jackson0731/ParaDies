@@ -52,10 +52,6 @@ public class EnemyAct : MonoBehaviour
         {
             speed = 1.2f;
         }
-        if (animator.GetBool("Death") == true)
-        {
-            StartCoroutine(WaitDead());
-        }
     }
 
     void OnTriggerStay(Collider other)
@@ -107,15 +103,8 @@ public class EnemyAct : MonoBehaviour
         animator.SetBool("Attack", false);
         yield break;
     }
-    IEnumerator WaitDead()
+    private void OnAnimationEnd()
     {
-        animator = GetComponent<Animator>();
-        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
-        while (currentState.normalizedTime < 1.0f)
-        {
-            yield return null;
-        }
-        GameObject.Find("Player").GetComponent<Shoot>().animEnd = true;
-        yield break;
+        gameObject.SetActive(false);
     }
 }
