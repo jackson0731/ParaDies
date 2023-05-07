@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Text;
 using WiimoteApi;
-using UnityEngine.UI;
 
 public class Shoot : MonoBehaviour
 {
@@ -30,6 +29,8 @@ public class Shoot : MonoBehaviour
     public Text hptext;
     public GameObject Deadtext;
 
+    public GameObject End;
+
     void Start()
     {
         WiimoteManager.FindWiimotes();
@@ -42,6 +43,7 @@ public class Shoot : MonoBehaviour
         GameObject.Find("Level1").SetActive(true);
         GameObject.Find("Level2").SetActive(false);
         GameObject.Find("Level3").SetActive(false);
+        End.SetActive(false);
 
         anim = gameObject.GetComponent<Animation>();
         foreach (AnimationClip clip in anim)
@@ -122,7 +124,12 @@ public class Shoot : MonoBehaviour
             if (GameObject.Find("Level3").GetComponent<Move3>().AllEnemyDead3 == true)
             {
                 anim.Play("Move3");
+                Level++;
             }
+        }
+        if (Level == 4)
+        {
+            End.SetActive(true);
         }
         hptext.text = "" + HP;
         if(HP == 0)

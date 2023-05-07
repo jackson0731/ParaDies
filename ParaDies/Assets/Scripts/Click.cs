@@ -35,19 +35,18 @@ public class Click : MonoBehaviour
                 buttonPressed = true;
                 play.onClick.Invoke();
             }
-            else if (wiimote.Button.one && !buttonPressed)
+            else if (wiimote.Button.plus && !buttonPressed)
             {
                 buttonPressed = true;
                 set.onClick.Invoke();
             }
-
-            else if (wiimote.Button.two && !buttonPressed)
+            else if (wiimote.Button.minus && !buttonPressed)
             {
                 buttonPressed = true;
                 quit.onClick.Invoke();
             }
 
-            if (!wiimote.Button.a && !wiimote.Button.one && !wiimote.Button.two)
+            if (!wiimote.Button.a && !wiimote.Button.plus && !wiimote.Button.minus)
             {
                 buttonPressed = false;
             }
