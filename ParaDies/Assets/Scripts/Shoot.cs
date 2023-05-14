@@ -3,9 +3,11 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Text;
 using WiimoteApi;
+using UnityEngine.SceneManagement;
 
 public class Shoot : MonoBehaviour
 {
+    private GameObject[] GameObjects;
 
     private Wiimote wiimote;
     private bool buttonPressed = false;
@@ -16,10 +18,10 @@ public class Shoot : MonoBehaviour
     public RectTransform uiElement;
     public LayerMask layerMask;
 
-    private Animation anim;
-    public bool Moved;
-    public bool Moved2;
-    public bool Moved3;
+    public Animation anim;
+    public bool Moved = false;
+    public bool Moved2 = false;
+    public bool Moved3 = false;
 
     public int Level = 1;
 
@@ -27,12 +29,18 @@ public class Shoot : MonoBehaviour
     private GameObject ShootedEnemy;
 
     public Text hptext;
+    public GameObject hpAmo;
     public GameObject Deadtext;
+    public GameObject CYFChat;
+    public GameObject Next;
+    public bool ChatEnd = false;
 
     public GameObject End;
 
     void Start()
     {
+        GameObjects = GameObject.FindGameObjectsWithTag("enemy");
+
         WiimoteManager.FindWiimotes();
         wiimote = WiimoteManager.Wiimotes[0];
         wiimote.SetupIRCamera(IRDataType.BASIC);
@@ -44,6 +52,9 @@ public class Shoot : MonoBehaviour
         GameObject.Find("Level2").SetActive(false);
         GameObject.Find("Level3").SetActive(false);
         End.SetActive(false);
+        hpAmo.SetActive(true);
+        CYFChat.SetActive(false);
+        Next.SetActive(false);
 
         anim = gameObject.GetComponent<Animation>();
         foreach (AnimationClip clip in anim)
@@ -57,6 +68,17 @@ public class Shoot : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            GameObjects[0].GetComponent<EnemyAct>().animator.SetBool("Death", true);
+            GameObjects[1].GetComponent<EnemyAct>().animator.SetBool("Death", true);
+            GameObjects[2].GetComponent<EnemyAct>().animator.SetBool("Death", true);
+            GameObjects[3].GetComponent<EnemyAct>().animator.SetBool("Death", true);
+            GameObjects[4].GetComponent<EnemyAct>().animator.SetBool("Death", true);
+            GameObjects[5].GetComponent<EnemyAct>().animator.SetBool("Death", true);
+            GameObjects[6].GetComponent<EnemyAct>().animator.SetBool("Death", true);
+        }
+
         if (wiimote != null)
         {
             wiimote.SendPlayerLED(true, false, false, false);
@@ -107,7 +129,6 @@ public class Shoot : MonoBehaviour
             if (GameObject.Find("Level1").GetComponent<Move1>().AllEnemyDead == true)
             {
                 anim.Play("Move1");
-                
             }
         }
         if (Level == 2)
@@ -124,7 +145,6 @@ public class Shoot : MonoBehaviour
             if (GameObject.Find("Level3").GetComponent<Move3>().AllEnemyDead3 == true)
             {
                 anim.Play("Move3");
-                Level++;
             }
         }
         if (Level == 4)
@@ -135,6 +155,13 @@ public class Shoot : MonoBehaviour
         if(HP == 0)
         {
             Deadtext.SetActive(true);
+        }
+
+        if (Moved3 == true && ChatEnd == false)
+        {
+            CYFChat.SetActive(true);
+            StartCoroutine(NextLevel());
+            hpAmo.SetActive(false);
         }
     }
 
@@ -152,6 +179,30 @@ public class Shoot : MonoBehaviour
         else if (Level == 3)
         {
             Moved3 = true;
+            Level++;
+        }
+        else if (Level == 4)
+        {
+            SceneManager.LoadScene("2F");
+        }
+    }
+
+    IEnumerator NextLevel()
+    {
+        yield return new WaitForSeconds(2.0f);
+        Next.SetActive(true);
+        if (wiimote.Button.a && !buttonPressed)
+        {
+            buttonPressed = true;
+            ChatEnd = true;
+            anim.Play("Change");
+            anim.Play("Move4");
+        }
+        if(ChatEnd == true)
+        {
+            Next.SetActive(false);
+            CYFChat.SetActive(false);
+            hpAmo.SetActive(true);
         }
     }
 }
