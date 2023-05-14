@@ -31,30 +31,22 @@ public class Pause : MonoBehaviour
     {
         if (wiimote.Button.plus && !buttonPressed && !PauseWindow.activeSelf)
         {
-            buttonPressed = true;
             Time.timeScale = 0f;
             PauseWindow.SetActive(true);
         }
-        if(wiimote.Button.a && !buttonPressed && PauseWindow.activeSelf)
+        else if(wiimote.Button.a && !buttonPressed && PauseWindow.activeSelf)
         {
-            buttonPressed = true;
             Time.timeScale = 1f;
             PauseWindow.SetActive(false);
         }
-        if (wiimote.Button.plus && !buttonPressed && PauseWindow.activeSelf)
+        else if (wiimote.Button.plus && !buttonPressed && PauseWindow.activeSelf)
         {
-            buttonPressed = true;
             Debug.Log("Setting");
         }
-        if (wiimote.Button.minus && !buttonPressed && PauseWindow.activeSelf)
+        else if (wiimote.Button.minus && !buttonPressed && PauseWindow.activeSelf)
         {
-            buttonPressed = true;
             Time.timeScale = 1f;
             SceneManager.LoadScene("MainMenu");
-        }
-        if(!wiimote.Button.plus && !wiimote.Button.a && !wiimote.Button.minus)
-        {
-            buttonPressed = false;
         }
     }
 }
