@@ -28,11 +28,18 @@ public class EnemyAct : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(animator.GetBool("Death") == true)
+        {
+            animator.SetBool("Walking", false);
+            animator.SetBool("Attack", false);
+        }
+
         if(gameObject.activeSelf && walk == true && animator.GetBool("Death") == false)
         {
             animator.SetBool("Walking", true);
             direction = (Player.transform.position - Enemy.transform.position).normalized;
             direction.y = 0f;
+
             Vector3 lookPos = Player.transform.position - transform.position;
             lookPos.y = 0;
             Quaternion rotation = Quaternion.LookRotation(lookPos);
@@ -106,5 +113,14 @@ public class EnemyAct : MonoBehaviour
     private void OnAnimationEnd()
     {
         gameObject.SetActive(false);
+    }
+
+    private void Drop()
+    {
+        animator.SetBool("DropEnd", true);
+    }
+    private void Intro()
+    {
+        animator.SetBool("IntroEnd", true);
     }
 }
