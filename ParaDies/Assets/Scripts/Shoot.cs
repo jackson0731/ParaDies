@@ -96,11 +96,18 @@ public class Shoot : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                 {
-                    hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Walking", false);
                     ShootedEnemy = hit.collider.gameObject;
-                    if(ShootedEnemy.GetComponent<EnemyAct>().animator.GetBool("Walking") == false)
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
                     {
-                        hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Death", true);
+                        hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Walking", false);
+                        if (ShootedEnemy.GetComponent<EnemyAct>().animator.GetBool("Walking") == false)
+                        {
+                            hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Death", true);
+                        }
+                    }
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("FlyEnemy"))
+                    {
+                        ShootedEnemy.SetActive(false);
                     }
                 }
             }
