@@ -21,7 +21,7 @@ public class Click : MonoBehaviour
         wiimote.SetupIRCamera(IRDataType.BASIC);
         wiimote.SendPlayerLED(true, false, false, false);
 
-        GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
+        GameObject.Find("Dot 5").GetComponent<Image>().color = Color.red;
     }
 
     void Update()
@@ -55,7 +55,7 @@ public class Click : MonoBehaviour
 
     public void OnPlayClick()
     {
-        SceneManager.LoadScene("1F");
+        SceneManager.LoadScene("Intro");
     }
 
     public void OnSetClick()
