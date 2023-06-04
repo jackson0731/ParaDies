@@ -95,12 +95,13 @@ public class Shop : MonoBehaviour
 
         if (gameObject.GetComponent<Shoot>().Moved3 == true && i != 9)
         {
+            CYF.SetActive(true);
             Text.SetActive(true);
             Next.SetActive(true);
             gameObject.GetComponent<Shoot>().hpAmo.SetActive(false);
         }
 
-        if(endChat == true)
+        if(endChat == true && gameObject.GetComponent<Shoot>().Level == 4)
         {
             gameObject.GetComponent<Shoot>().hpAmo.SetActive(true);
             gameObject.GetComponent<Animation>().Play("Move4");

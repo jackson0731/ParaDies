@@ -32,6 +32,7 @@ public class IntroInA5 : MonoBehaviour
         Message.SetActive(true);
         Text.SetActive(false);
         Next.SetActive(false);
+        gameObject.GetComponent<Shoot>().hpAmo.SetActive(false);
     }
 
     // Update is called once per frame
@@ -100,6 +101,7 @@ public class IntroInA5 : MonoBehaviour
         {
             Text.SetActive(false);
             Next.SetActive(false);
+            gameObject.GetComponent<Shoot>().hpAmo.SetActive(true);
             endIntro = true;
         }
     }

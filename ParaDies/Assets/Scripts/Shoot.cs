@@ -27,6 +27,10 @@ public class Shoot : MonoBehaviour
     public bool Moved = false;
     public bool Moved2 = false;
     public bool Moved3 = false;
+    public bool Moved4 = false;
+    public bool Moved5 = false;
+    public bool Moved6 = false;
+    public bool Moved7 = false;
 
     public int Level = 0;
 
@@ -41,6 +45,7 @@ public class Shoot : MonoBehaviour
     public bool ChatEnd = false;
 
     public GameObject End;
+    public GameObject End2;
 
     void Start()
     {
@@ -56,7 +61,11 @@ public class Shoot : MonoBehaviour
         GameObject.Find("Level1").SetActive(false);
         GameObject.Find("Level2").SetActive(false);
         GameObject.Find("Level3").SetActive(false);
+        GameObject.Find("Level4").SetActive(false);
+        GameObject.Find("Level5").SetActive(false);
+        GameObject.Find("Level6").SetActive(false);
         End.SetActive(false);
+        End2.SetActive(false);
         hpAmo.SetActive(false);
 
         anim = gameObject.GetComponent<Animation>();
@@ -117,6 +126,10 @@ public class Shoot : MonoBehaviour
                         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("FlyEnemy"))
                         {
                             Money += 1;
+                            ShootedEnemy.SetActive(false);
+                        }
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemyAmo"))
+                        {
                             ShootedEnemy.SetActive(false);
                         }
                     }
@@ -192,9 +205,29 @@ public class Shoot : MonoBehaviour
                 anim.Play("Move3");
             }
         }
-        if (Level == 4)
+        if (Level == 5)
         {
-            End.SetActive(true);
+            GameObject.Find("Level4m").transform.GetChild(0).gameObject.SetActive(true);
+            if (GameObject.Find("Level4").GetComponent<Move4>().AllEnemyDead4 == true)
+            {
+                anim.Play("Move5");
+            }
+        }
+        if (Level == 6)
+        {
+            GameObject.Find("Level5m").transform.GetChild(0).gameObject.SetActive(true);
+            if (GameObject.Find("Level5").GetComponent<Move5>().AllEnemyDead5 == true)
+            {
+                anim.Play("Move6");
+            }
+        }
+        if (Level == 7)
+        {
+            GameObject.Find("Level6m").transform.GetChild(0).gameObject.SetActive(true);
+            if (GameObject.Find("Level6").GetComponent<Move6>().AllEnemyDead6 == true)
+            {
+                anim.Play("Move7");
+            }
         }
         hptext.text = "" + HP;
         if(HP == 0)
@@ -226,12 +259,23 @@ public class Shoot : MonoBehaviour
         }
         else if (Level == 4)
         {
-            SceneManager.LoadScene("2F");
+            Moved4 = true;
+            Level++;
         }
-    }
-
-    private void EnemyOut()
-    {
-
+        else if (Level == 5)
+        {
+            Moved5 = true;
+            Level++;
+        }
+        else if (Level == 6)
+        {
+            Moved6 = true;
+            Level++;
+        }
+        else if (Level == 7)
+        {
+            Moved7 = true;
+            End2.SetActive(true);
+        }
     }
 }
