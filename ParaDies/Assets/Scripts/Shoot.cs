@@ -14,6 +14,10 @@ public class Shoot : MonoBehaviour
     public Camera mainCamera;
 
     public int HP = 3;
+    public int MAXHP = 3;
+    public int MAXAmo = 15;
+    public int Amo = 15;
+    public int Money = 0;
 
     public RectTransform uiElement;
     public LayerMask layerMask;
@@ -30,10 +34,10 @@ public class Shoot : MonoBehaviour
     private GameObject ShootedEnemy;
 
     public Text hptext;
+    public Text Amotext;
+    public Text Moneytext;
     public GameObject hpAmo;
     public GameObject Deadtext;
-    public GameObject CYFChat;
-    public GameObject Next;
     public bool ChatEnd = false;
 
     public GameObject End;
@@ -54,8 +58,6 @@ public class Shoot : MonoBehaviour
         GameObject.Find("Level3").SetActive(false);
         End.SetActive(false);
         hpAmo.SetActive(false);
-        CYFChat.SetActive(false);
-        Next.SetActive(false);
 
         anim = gameObject.GetComponent<Animation>();
         foreach (AnimationClip clip in anim)
@@ -100,6 +102,7 @@ public class Shoot : MonoBehaviour
                     ShootedEnemy = hit.collider.gameObject;
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
                     {
+                        Money += 1;
                         hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Walking", false);
                         if (ShootedEnemy.GetComponent<EnemyAct>().animator.GetBool("Walking") == false)
                         {
@@ -108,17 +111,47 @@ public class Shoot : MonoBehaviour
                     }
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("FlyEnemy"))
                     {
+                        Money += 1;
                         ShootedEnemy.SetActive(false);
                     }
                 }
+            }
+            if (wiimote.Button.b && !buttonPressed)
+            {
+                buttonPressed = true;
+                Amotext.text = "" + MAXAmo; 
             }
             if (animEnd == true)
             {
                 ShootedEnemy.SetActive(false);
             }
-            if (!wiimote.Button.a)
+            if (!wiimote.Button.a && !wiimote.Button.b && !wiimote.Button.plus && !wiimote.Button.minus)
             {
                 buttonPressed = false;
+            }
+
+            if (gameObject.GetComponent<Shop>().shop.activeSelf)
+            {
+                Moneytext.text = "$¡G" + Money;
+                if (wiimote.Button.b && !buttonPressed)
+                {
+                    buttonPressed = true;
+                    gameObject.GetComponent<Shop>().shop.SetActive(false);
+                }
+                if (wiimote.Button.plus && !buttonPressed && Money >= 5)
+                {
+                    buttonPressed = true;
+                    MAXHP++;
+                    HP = MAXHP;
+                    Money -= 5;
+                }
+                if (wiimote.Button.minus && !buttonPressed && Money >= 3)
+                {
+                    buttonPressed = true;
+                    MAXAmo += 5;
+                    Amo = MAXAmo;
+                    Money -= 3;
+                }
             }
         }
 
@@ -169,13 +202,6 @@ public class Shoot : MonoBehaviour
         {
             Deadtext.SetActive(true);
         }
-
-        if (Moved3 == true && ChatEnd == false)
-        {
-            CYFChat.SetActive(true);
-            StartCoroutine(NextLevel());
-            hpAmo.SetActive(false);
-        }
     }
 
     private void OnAnimationEnd()
@@ -202,25 +228,6 @@ public class Shoot : MonoBehaviour
         else if (Level == 4)
         {
             SceneManager.LoadScene("2F");
-        }
-    }
-
-    IEnumerator NextLevel()
-    {
-        yield return new WaitForSeconds(2.0f);
-        Next.SetActive(true);
-        if (wiimote.Button.a && !buttonPressed)
-        {
-            buttonPressed = true;
-            ChatEnd = true;
-            anim.Play("Change");
-            anim.Play("Move4");
-        }
-        if(ChatEnd == true)
-        {
-            Next.SetActive(false);
-            CYFChat.SetActive(false);
-            hpAmo.SetActive(true);
         }
     }
 }

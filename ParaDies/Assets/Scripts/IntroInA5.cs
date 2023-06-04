@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using WiimoteApi;
 
 public class IntroInA5 : MonoBehaviour
@@ -15,6 +14,7 @@ public class IntroInA5 : MonoBehaviour
     public GameObject Text;
     public Text text;
     public GameObject CYF;
+    public GameObject Next;
 
     private int i = 0;
 
@@ -31,6 +31,7 @@ public class IntroInA5 : MonoBehaviour
         FadeIn.SetActive(true);
         Message.SetActive(true);
         Text.SetActive(false);
+        Next.SetActive(false);
     }
 
     // Update is called once per frame
@@ -49,6 +50,7 @@ public class IntroInA5 : MonoBehaviour
                 buttonPressed = true;
                 Message.SetActive(false);
                 Text.SetActive(true);
+                Next.SetActive(true);
                 i++;
             }
             if(wiimote.Button.a && buttonPressed == false && i >= 1)
@@ -96,7 +98,8 @@ public class IntroInA5 : MonoBehaviour
         }
         if (i == 11)
         {
-            Text.SetActive(true);
+            Text.SetActive(false);
+            Next.SetActive(false);
             endIntro = true;
         }
     }
