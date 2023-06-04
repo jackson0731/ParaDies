@@ -19,11 +19,12 @@ public class Shoot : MonoBehaviour
     public LayerMask layerMask;
 
     public Animation anim;
+    public bool Moved0 = false;
     public bool Moved = false;
     public bool Moved2 = false;
     public bool Moved3 = false;
 
-    public int Level = 1;
+    public int Level = 0;
 
     public bool animEnd = false;
     private GameObject ShootedEnemy;
@@ -48,11 +49,11 @@ public class Shoot : MonoBehaviour
 
         GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
 
-        GameObject.Find("Level1").SetActive(true);
+        GameObject.Find("Level1").SetActive(false);
         GameObject.Find("Level2").SetActive(false);
         GameObject.Find("Level3").SetActive(false);
         End.SetActive(false);
-        hpAmo.SetActive(true);
+        hpAmo.SetActive(false);
         CYFChat.SetActive(false);
         Next.SetActive(false);
 
@@ -130,9 +131,14 @@ public class Shoot : MonoBehaviour
             GameObject.Find("Dot 5").GetComponent<Image>().color = Color.red;
         }
 
+        if(Level == 0 && gameObject.GetComponent<IntroInA5>().endIntro == true)
+        {
+            anim.Play("Move0");
+        }
         if (Level == 1)
         {
-            GameObject.Find("Level1").SetActive(true);
+            GameObject.Find("Level1m").transform.GetChild(0).gameObject.SetActive(true);
+            hpAmo.SetActive(true);
             if (GameObject.Find("Level1").GetComponent<Move1>().AllEnemyDead == true)
             {
                 anim.Play("Move1");
@@ -174,7 +180,12 @@ public class Shoot : MonoBehaviour
 
     private void OnAnimationEnd()
     {
-        if (Level == 1)
+        if (Level == 0)
+        {
+            Moved0 = true;
+            Level++;
+        }
+        else if (Level == 1)
         {
             Moved = true;
             Level++;

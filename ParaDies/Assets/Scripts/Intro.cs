@@ -17,7 +17,7 @@ public class Intro : MonoBehaviour
     private bool Intro1End = false;
     private bool Intro2End = false;
     private bool Intro3End = false;
-    public int m = 1;
+    public int m = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -71,7 +71,7 @@ public class Intro : MonoBehaviour
                 }
             }
 
-            if (!wiimote.Button.a && !wiimote.Button.plus && !wiimote.Button.minus)
+            if (!wiimote.Button.a)
             {
                 buttonPressed = false;
             }
@@ -94,7 +94,7 @@ public class Intro : MonoBehaviour
         }
         if (Intro3End == true)
         {
-            SceneManager.LoadScene("Intro 2");
+            SceneManager.LoadScene("1F");
         }
     }
 }
