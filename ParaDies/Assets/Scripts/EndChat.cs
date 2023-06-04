@@ -27,7 +27,7 @@ public class EndChat : MonoBehaviour
         wiimote.SetupIRCamera(IRDataType.BASIC);
         wiimote.SendPlayerLED(true, false, false, false);
 
-        gameObject.GetComponent<Shop>().enabled = false;
+        
         Text.SetActive(false);
         Next.SetActive(false);
     }
@@ -59,11 +59,13 @@ public class EndChat : MonoBehaviour
 
         if (gameObject.GetComponent<Shoot>().Moved7 == true && i <= 3)
         {
+            gameObject.GetComponent<Shop>().enabled = false;
             Text.SetActive(true);
             Next.SetActive(true);
             gameObject.GetComponent<Shoot>().hpAmo.SetActive(false);
         }else if(i >= 3)
         {
+            gameObject.GetComponent<Shop>().enabled = true;
             Text.SetActive(false);
             Next.SetActive(false);
             gameObject.GetComponent<Shoot>().hpAmo.SetActive(true);
