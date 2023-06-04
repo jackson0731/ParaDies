@@ -63,32 +63,35 @@ public class EnemyAct : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        walk = false;
-        if (animator.GetBool("Death") == false)
+        if (other.gameObject.CompareTag("Player"))
         {
-            animator.SetBool("Walking", false);
-            if (playerdead == false)
+            walk = false;
+            if (animator.GetBool("Death") == false)
             {
-                if (attackTimer <= 0)
+                animator.SetBool("Walking", false);
+                if (playerdead == false)
                 {
-                    animator.SetBool("Attack", true);
-                    if (animator.GetBool("Attack") == true)
+                    if (attackTimer <= 0)
                     {
-                        StartCoroutine(WaitAttacked());
+                        animator.SetBool("Attack", true);
+                        if (animator.GetBool("Attack") == true)
+                        {
+                            StartCoroutine(WaitAttacked());
+                        }
+                    }
+                    else
+                    {
+                        attackTimer -= Time.deltaTime;
                     }
                 }
                 else
                 {
-                    attackTimer -= Time.deltaTime;
+                    Debug.Log("Player Dead");
                 }
-            }
-            else
-            {
-                Debug.Log("Player Dead");
-            }
-            if (other.CompareTag("Player"))
-            {
-                speed = 0f;
+                if (other.CompareTag("Player"))
+                {
+                    speed = 0f;
+                }
             }
         }
         else

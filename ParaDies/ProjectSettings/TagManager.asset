@@ -6,6 +6,7 @@ TagManager:
   tags:
   - enemy
   - FlyEnemy
+  - enemyAmo
   layers:
   - Default
   - TransparentFX
