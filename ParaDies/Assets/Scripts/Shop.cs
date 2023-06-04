@@ -16,8 +16,8 @@ public class Shop : MonoBehaviour
     public GameObject CYF;
     public GameObject Next;
 
-    private int i = 0;
-    private bool endChat;
+    public int i = 0;
+    public bool endChat;
 
     // Start is called before the first frame update
     void Start()
@@ -38,12 +38,16 @@ public class Shop : MonoBehaviour
         if (wiimote != null)
         {
             wiimote.SendPlayerLED(true, false, false, false);
-            if (wiimote.Button.a && buttonPressed == false && !shop.activeSelf)
+            if (wiimote.Button.a && buttonPressed == false && !shop.activeSelf && gameObject.GetComponent<Shoot>().Moved3 == true)
             {
                 buttonPressed = true;
                 i++;
             }
-            if (!wiimote.Button.a)
+            if(wiimote.Button.b && buttonPressed == false)
+            {
+                shop.SetActive(false);
+            }
+            if (!wiimote.Button.a &&　!wiimote.Button.b)
             {
                 buttonPressed = false;
             }
@@ -60,8 +64,9 @@ public class Shop : MonoBehaviour
         {
             shop.SetActive(true);
             text.text = "NPC：看吧明碼標價了，相信這些付出你不會讓你後悔的。";
+            i++;
         }
-        if (i == 4)
+        if (i == 4 && shop.activeSelf == false)
         {
             text.text = "NPC：很好，看來我們建立了基礎的信任，給你一個福利吧，來到二樓尋找我吧，去二樓的入口在另一邊，相信我，你不會想從這邊上去的。";
         }
@@ -88,10 +93,17 @@ public class Shop : MonoBehaviour
             endChat = true;
         }
 
-        if (gameObject.GetComponent<Shoot>().Moved3 == true)
+        if (gameObject.GetComponent<Shoot>().Moved3 == true && i != 9)
         {
             Text.SetActive(true);
             Next.SetActive(true);
+            gameObject.GetComponent<Shoot>().hpAmo.SetActive(false);
+        }
+
+        if(endChat == true)
+        {
+            gameObject.GetComponent<Shoot>().hpAmo.SetActive(true);
+            gameObject.GetComponent<Animation>().Play("Move4");
         }
     }
 }

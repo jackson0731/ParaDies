@@ -51,7 +51,7 @@ public class Shoot : MonoBehaviour
         wiimote.SetupIRCamera(IRDataType.BASIC);
         wiimote.SendPlayerLED(true, false, false, false);
 
-        GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
+        GameObject.Find("Dot 5").GetComponent<Image>().color = Color.yellow;
 
         GameObject.Find("Level1").SetActive(false);
         GameObject.Find("Level2").SetActive(false);
@@ -89,37 +89,48 @@ public class Shoot : MonoBehaviour
             if (wiimote.Button.a && !buttonPressed)
             {
                 buttonPressed = true;
-                // get the screen position of the UI element
-                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(uiElement.position.x, uiElement.position.y, 10));
-
-                // create a ray from the screen position
-                Ray ray = Camera.main.ScreenPointToRay(uiElement.position);
-
-                // perform a raycast
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                if (Amo != 0 && hpAmo.activeSelf)
                 {
-                    ShootedEnemy = hit.collider.gameObject;
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
+                    Amo--;
+                    Amotext.text = "" + Amo;
+                    GameObject.Find("Dot 5").GetComponent<Image>().color = Color.red;
+                    // get the screen position of the UI element
+                    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(new Vector3(uiElement.position.x, uiElement.position.y, 10));
+
+                    // create a ray from the screen position
+                    Ray ray = Camera.main.ScreenPointToRay(uiElement.position);
+
+                    // perform a raycast
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
                     {
-                        Money += 1;
-                        hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Walking", false);
-                        if (ShootedEnemy.GetComponent<EnemyAct>().animator.GetBool("Walking") == false)
+                        ShootedEnemy = hit.collider.gameObject;
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
                         {
-                            hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Death", true);
+                            Money += 1;
+                            hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Walking", false);
+                            if (ShootedEnemy.GetComponent<EnemyAct>().animator.GetBool("Walking") == false)
+                            {
+                                hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Death", true);
+                            }
+                        }
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("FlyEnemy"))
+                        {
+                            Money += 1;
+                            ShootedEnemy.SetActive(false);
                         }
                     }
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("FlyEnemy"))
-                    {
-                        Money += 1;
-                        ShootedEnemy.SetActive(false);
-                    }
                 }
+            }
+            if (!buttonPressed)
+            {
+                GameObject.Find("Dot 5").GetComponent<Image>().color = Color.yellow;
             }
             if (wiimote.Button.b && !buttonPressed)
             {
                 buttonPressed = true;
-                Amotext.text = "" + MAXAmo; 
+                Amo = MAXAmo;
+                Amotext.text = "" + Amo; 
             }
             if (animEnd == true)
             {
@@ -133,16 +144,12 @@ public class Shoot : MonoBehaviour
             if (gameObject.GetComponent<Shop>().shop.activeSelf)
             {
                 Moneytext.text = "$¡G" + Money;
-                if (wiimote.Button.b && !buttonPressed)
-                {
-                    buttonPressed = true;
-                    gameObject.GetComponent<Shop>().shop.SetActive(false);
-                }
                 if (wiimote.Button.plus && !buttonPressed && Money >= 5)
                 {
                     buttonPressed = true;
                     MAXHP++;
                     HP = MAXHP;
+                    hptext.text = "" + HP;
                     Money -= 5;
                 }
                 if (wiimote.Button.minus && !buttonPressed && Money >= 3)
@@ -150,20 +157,12 @@ public class Shoot : MonoBehaviour
                     buttonPressed = true;
                     MAXAmo += 5;
                     Amo = MAXAmo;
+                    Amotext.text = "" + Amo;
                     Money -= 3;
                 }
             }
         }
-
-        if (!buttonPressed)
-        {
-            GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
-        }
-        else
-        {
-            GameObject.Find("Dot 5").GetComponent<Image>().color = Color.red;
-        }
-
+        
         if(Level == 0 && gameObject.GetComponent<IntroInA5>().endIntro == true)
         {
             anim.Play("Move0");
@@ -229,5 +228,10 @@ public class Shoot : MonoBehaviour
         {
             SceneManager.LoadScene("2F");
         }
+    }
+
+    private void EnemyOut()
+    {
+
     }
 }

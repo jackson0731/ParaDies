@@ -7,6 +7,7 @@ using WiimoteApi;
 
 public class Pause : MonoBehaviour
 {
+    public GameObject Shop;
     private Wiimote wiimote;
     private bool buttonPressed = false;
     public Camera mainCamera;
@@ -23,38 +24,41 @@ public class Pause : MonoBehaviour
 
         PauseWindow.SetActive(false);
 
-        GameObject.Find("Dot 5").GetComponent<Image>().color = Color.green;
+        GameObject.Find("Dot 5").GetComponent<Image>().color = Color.yellow;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (wiimote.Button.plus && !buttonPressed && !PauseWindow.activeSelf)
+        if (!Shop.activeSelf)
         {
-            buttonPressed = true;
-            Time.timeScale = 0f;
-            PauseWindow.SetActive(true);
-        }
-        if(wiimote.Button.a && !buttonPressed && PauseWindow.activeSelf)
-        {
-            buttonPressed = true;
-            Time.timeScale = 1f;
-            PauseWindow.SetActive(false);
-        }
-        if (wiimote.Button.plus && !buttonPressed && PauseWindow.activeSelf)
-        {
-            buttonPressed = true;
-            Debug.Log("Setting");
-        }
-        if (wiimote.Button.minus && !buttonPressed && PauseWindow.activeSelf)
-        {
-            buttonPressed = true;
-            Time.timeScale = 1f;
-            SceneManager.LoadScene("MainMenu");
-        }
-        if(!wiimote.Button.plus && !wiimote.Button.a && !wiimote.Button.minus)
-        {
-            buttonPressed = false;
+            if (wiimote.Button.plus && !buttonPressed && !PauseWindow.activeSelf)
+            {
+                buttonPressed = true;
+                Time.timeScale = 0f;
+                PauseWindow.SetActive(true);
+            }
+            if (wiimote.Button.a && !buttonPressed && PauseWindow.activeSelf)
+            {
+                buttonPressed = true;
+                Time.timeScale = 1f;
+                PauseWindow.SetActive(false);
+            }
+            if (wiimote.Button.plus && !buttonPressed && PauseWindow.activeSelf)
+            {
+                buttonPressed = true;
+                Debug.Log("Setting");
+            }
+            if (wiimote.Button.minus && !buttonPressed && PauseWindow.activeSelf)
+            {
+                buttonPressed = true;
+                Time.timeScale = 1f;
+                SceneManager.LoadScene("MainMenu");
+            }
+            if (!wiimote.Button.plus && !wiimote.Button.a && !wiimote.Button.minus)
+            {
+                buttonPressed = false;
+            }
         }
     }
 }
