@@ -93,12 +93,18 @@ public class Shop : MonoBehaviour
             endChat = true;
         }
 
-        if (gameObject.GetComponent<Shoot>().Moved3 == true && i != 9)
+        if (gameObject.GetComponent<Shoot>().Moved3 == true && i <= 9)
         {
             CYF.SetActive(true);
             Text.SetActive(true);
             Next.SetActive(true);
             gameObject.GetComponent<Shoot>().hpAmo.SetActive(false);
+        }
+        else if(i >= 9)
+        {
+            Text.SetActive(false);
+            Next.SetActive(false);
+            gameObject.GetComponent<Shoot>().hpAmo.SetActive(true);
         }
 
         if(endChat == true && gameObject.GetComponent<Shoot>().Level == 4)

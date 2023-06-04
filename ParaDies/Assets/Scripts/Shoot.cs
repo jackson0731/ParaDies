@@ -20,7 +20,9 @@ public class Shoot : MonoBehaviour
     public int Money = 0;
 
     public RectTransform uiElement;
-    public LayerMask layerMask;
+    public LayerMask layerMask1;
+    public LayerMask layerMask2;
+    public LayerMask layerMask3;
 
     public Animation anim;
     public bool Moved0 = false;
@@ -111,7 +113,7 @@ public class Shoot : MonoBehaviour
 
                     // perform a raycast
                     RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask1))
                     {
                         ShootedEnemy = hit.collider.gameObject;
                         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemy"))
@@ -123,16 +125,23 @@ public class Shoot : MonoBehaviour
                                 hit.collider.gameObject.GetComponent<EnemyAct>().animator.SetBool("Death", true);
                             }
                         }
+                    }
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask2))
+                    {
                         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("FlyEnemy"))
                         {
                             Money += 1;
-                            ShootedEnemy.SetActive(false);
-                        }
-                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemyAmo"))
-                        {
-                            ShootedEnemy.SetActive(false);
+                            hit.collider.gameObject.SetActive(false);
                         }
                     }
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask3))
+                    {
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("enemyAmo"))
+                        {
+                            hit.collider.gameObject.SetActive(false);
+                        }
+                    }
+
                 }
             }
             if (!buttonPressed)
