@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Intro.unity
     guid: 48c08c4a2f01fbb4090a2544a12754ff
+  - enabled: 1
+    path: Assets/Scenes/Destroy.unity
+    guid: fdddf229a15d58b40b473723d4720a65
   m_configObjects: {}

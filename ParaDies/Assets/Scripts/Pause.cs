@@ -53,7 +53,7 @@ public class Pause : MonoBehaviour
             {
                 buttonPressed = true;
                 Time.timeScale = 1f;
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("Destroy");
             }
             if (!wiimote.Button.plus && !wiimote.Button.a && !wiimote.Button.minus)
             {

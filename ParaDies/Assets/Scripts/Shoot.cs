@@ -49,6 +49,8 @@ public class Shoot : MonoBehaviour
     public GameObject End;
     public GameObject End2;
 
+    public AudioSource audioSource;
+
     void Start()
     {
         GameObjects = GameObject.FindGameObjectsWithTag("enemy");
@@ -102,6 +104,7 @@ public class Shoot : MonoBehaviour
                 buttonPressed = true;
                 if (Amo != 0 && hpAmo.activeSelf)
                 {
+                    audioSource.Play();
                     Amo--;
                     Amotext.text = "" + Amo;
                     GameObject.Find("Dot 5").GetComponent<Image>().color = Color.red;

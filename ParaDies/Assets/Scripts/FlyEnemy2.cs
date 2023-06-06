@@ -7,7 +7,7 @@ public class FlyEnemy2 : MonoBehaviour
     private GameObject Player;
     private GameObject Enemy;
 
-    public float speed = 0.5f;
+    public float speed = 2f;
     private Vector3 direction;
     private bool playerdead = false;
 
@@ -22,6 +22,7 @@ public class FlyEnemy2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = 5;
         int randomNumber = Random.Range(1, 10);
         if(randomNumber >= 4)
         {

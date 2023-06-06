@@ -40,13 +40,13 @@ public class Click : MonoBehaviour
                 buttonPressed = true;
                 set.onClick.Invoke();
             }
-            else if (wiimote.Button.minus && !buttonPressed)
+            else if (wiimote.Button.b && !buttonPressed)
             {
                 buttonPressed = true;
                 quit.onClick.Invoke();
             }
 
-            if (!wiimote.Button.a && !wiimote.Button.plus && !wiimote.Button.minus)
+            if (!wiimote.Button.a && !wiimote.Button.plus && !wiimote.Button.b)
             {
                 buttonPressed = false;
             }
@@ -65,6 +65,6 @@ public class Click : MonoBehaviour
 
     public void OnQuitClick()
     {
-        Debug.Log("Quit");
+        Application.Quit();
     }
 }
